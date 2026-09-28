@@ -7,11 +7,17 @@ import java.util.ArrayList;
  * @author joeld
  */
 public class Paquete {
+    private final String id;
     private String nombre;
     public static ArrayList<Servicio> listaServicios;
     
-    public Paquete(String nombre) {
+    public Paquete(String id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
+    }
+
+    public String getId() {
+        return id;
     }
     
     public String getNombre() {

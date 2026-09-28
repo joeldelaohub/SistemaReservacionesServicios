@@ -7,15 +7,17 @@ import java.time.LocalTime;
  * @author joeld
  */
 public class Evento {
+    private final String id;
     private LocalDate fecha;
     private int duracion;
     private String ubicacion;
     private String tipo;
     private LocalTime hora;
     
-    public Evento(LocalDate fecha, int duracion, String ubicacion,
+    public Evento(String id, LocalDate fecha, int duracion, String ubicacion,
             String tipo, LocalTime hora) {
         
+        this.id = id;
         this.fecha = fecha;
         this.duracion = duracion;
         this.ubicacion = ubicacion;
@@ -23,6 +25,10 @@ public class Evento {
         this.hora = hora;
     }
 
+    public String getId() {
+        return id;
+    }
+    
     public LocalDate getFecha() {
         return fecha;
     }

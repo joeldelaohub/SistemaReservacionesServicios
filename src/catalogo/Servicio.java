@@ -5,14 +5,20 @@ package catalogo;
  * @author joeld
  */
 public class Servicio {
+    private final String id;
     private String nombre;
     private double precio;
     private String descripcion;
     
-    public Servicio(String nombre, double precio, String descripcion) {
+    public Servicio(String id, String nombre, double precio, String descripcion) {
+        this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNombre() {
