@@ -9,12 +9,17 @@ public class Factura {
     private double montoTotal;
     private double saldoRestante;
     private double saldoAnticipado;
-
-    public Factura(Reserva reserva, double montoTotal, double saldoRestante, double saldoAnticipado) {
+    private boolean reembolso;
+    
+    public Factura(Reserva reserva, double montoTotal, double saldoAnticipado) {
+        if(saldoAnticipado < (montoTotal * 0.30)) {
+            throw new IllegalArgumentException("el saldo anticipado debe ser mayor o igual al 30%");
+        }
         this.reserva = reserva;
         this.montoTotal = montoTotal;
-        this.saldoRestante = saldoRestante;
         this.saldoAnticipado = saldoAnticipado;
+        this.saldoRestante = this.montoTotal - this.saldoAnticipado;
+        this.reembolso = false;
     }
 
     public Reserva getReserva() {
@@ -46,12 +51,25 @@ public class Factura {
     }
 
     public void setSaldoAnticipado(double saldoAnticipado) {
+        if(saldoAnticipado < (montoTotal * 0.30)) {
+            throw new IllegalArgumentException("el saldo anticipado debe ser mayor o igual al 30%");
+        }
+        
         this.saldoAnticipado = saldoAnticipado;
+    }
+    
+    public boolean isReembolso() {
+        return reembolso;
+    }
+    
+    public void marcarReembolso() {
+        this.reembolso = true;
     }
     
     @Override
     public String toString() {
-        return String.format("Reserva: %s%nMonto Total: %.2f%nSaldo Restante: %.2f%nSaldo Anticipado: %.2f%n", 
-                reserva.getId(), montoTotal, saldoRestante, saldoAnticipado);
+        return String.format("Reserva: %s%nMonto Total: %.2f%nSaldo Restante: %.2f%nSaldo Anticipado: %.2f%nReembolso: %s%n", 
+                reserva.getId(), montoTotal, saldoRestante, saldoAnticipado,
+                reembolso ? "Se reembolso": "Sin reembolso");
     }
 }

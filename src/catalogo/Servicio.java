@@ -9,9 +9,10 @@ public class Servicio {
     private String nombre;
     private double precio;
     private String descripcion;
+    private static int contadorServicios = 0;
     
-    public Servicio(String id, String nombre, double precio, String descripcion) {
-        this.id = id;
+    public Servicio(String nombre, double precio, String descripcion) {
+        this.id = String.format("SE%02d", contadorServicios++);
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
@@ -47,6 +48,6 @@ public class Servicio {
     
     @Override
     public String toString() {
-        return String.format("Nombre: %s%nPrecio: %.2f%nDescripcion: %s%n", nombre, precio, descripcion);
+        return String.format("id: %s%nNombre: %s%nPrecio: %.2f%nDescripcion: %s%n",id, nombre, precio, descripcion);
     }
 }
