@@ -13,13 +13,26 @@ public class Paquete {
     private ArrayList<Servicio> listaServicios;
     private static int contadorPaquete = 0; 
     
+    public Paquete(String id, String nombre, ArrayList<Servicio> servicios, double precio) {
+        this.id = String.format("PAQ%02d", contadorPaquete++);
+        this.nombre = nombre;
+        this.setListaServicios(servicios);
+        this.setPrecio(precio);
+    }
+    
     public Paquete(String nombre, ArrayList<Servicio> servicios, double precio) {
         this.id = String.format("PAQ%02d", contadorPaquete++);
         this.nombre = nombre;
         this.setListaServicios(servicios);
         this.setPrecio(precio);
     }
-
+    
+    public Paquete(String id, String nombre, double precio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+    
     public String getId() {
         return id;
     }
@@ -96,5 +109,9 @@ public class Paquete {
     public String toString() {
         return String.format("id: %s%nNombre: %s%nPrecio: %.2f%n%nCantidad de Servicios: %d%n",
                 id, nombre, precio, listaServicios.size());
+    }
+    
+    public String toCsv() {
+        return String.join(";", id, nombre, String.valueOf(precio));
     }
 }

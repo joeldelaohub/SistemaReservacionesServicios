@@ -18,6 +18,13 @@ public class Servicio {
         this.descripcion = descripcion;
     }
 
+     public Servicio(String id, String nombre, double precio, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+    }
+    
     public String getId() {
         return id;
     }
@@ -49,5 +56,9 @@ public class Servicio {
     @Override
     public String toString() {
         return String.format("id: %s%nNombre: %s%nPrecio: %.2f%nDescripcion: %s%n",id, nombre, precio, descripcion);
+    }
+    
+    public String toCsv() {
+        return String.join(";", id, nombre, String.valueOf(precio), descripcion);
     }
 }

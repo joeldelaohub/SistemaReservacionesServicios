@@ -3,7 +3,6 @@ package reserva;
 import catalogo.Paquete;
 import estados.Estado;
 import evento.Evento;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import sistemareservacionesservicios.usuario.Cliente;
 

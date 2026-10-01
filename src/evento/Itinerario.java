@@ -13,6 +13,7 @@ public class Itinerario {
     private Evento evento;
     private final int MIN_HORA_MONTAJE = 2;
     private final int MIN_HORA_PRUEBA_SONIDO = 1;
+    private static int contadorItinerarios = 0;
     
     public Itinerario(String id, LocalTime horaMontaje, LocalTime horaPruebaSonido, Evento evento) {
         if(horaMontaje.isAfter(evento.getHora().minusHours(MIN_HORA_MONTAJE))) {
@@ -28,6 +29,25 @@ public class Itinerario {
         }
         
         this.id = id;
+        this.evento = evento;
+        this.horaMontaje = horaMontaje;
+        this.horaPruebaSonido = horaPruebaSonido;
+    }
+    
+    public Itinerario(LocalTime horaMontaje, LocalTime horaPruebaSonido, Evento evento) {
+        if(horaMontaje.isAfter(evento.getHora().minusHours(MIN_HORA_MONTAJE))) {
+            throw new IllegalArgumentException("la hora del montaje debe ser minimo 2 horas antes del evento");
+        }
+        
+        if(horaMontaje.isAfter(horaPruebaSonido)) {
+            throw new IllegalArgumentException("La hora del montaje debe ser antes que la prueba del sonido");
+        }
+        
+        if(horaPruebaSonido.isAfter(evento.getHora().minusHours(MIN_HORA_PRUEBA_SONIDO))) {
+            throw new IllegalArgumentException("la hora de la prueba de sonido debe ser minimo 1 hora antes del evento");
+        }
+        
+        this.id = String.format("IT%02d", contadorItinerarios++);
         this.evento = evento;
         this.horaMontaje = horaMontaje;
         this.horaPruebaSonido = horaPruebaSonido;
@@ -84,5 +104,10 @@ public class Itinerario {
     public String toString() {
         return String.format("Hora de Montaje: %s%nHora de Prueba de Sonido: %s%nFecha y hora del Evento: %s %s%n",
                 horaMontaje.toString(), horaPruebaSonido.toString(), evento.getFecha().toString(), evento.getHora().toString());
+    }
+    
+    public String toCSV() {
+        return String.join(";", id, horaMontaje.toString(), horaPruebaSonido.toString(),
+                evento.getId());
     }
 }

@@ -13,11 +13,23 @@ public class Evento {
     private String ubicacion;
     private String tipo;
     private LocalTime hora;
+    private static int contadorEventos = 0;
     
     public Evento(String id, LocalDate fecha, int duracion, String ubicacion,
             String tipo, LocalTime hora) {
         
         this.id = id;
+        this.fecha = fecha;
+        this.duracion = duracion;
+        this.ubicacion = ubicacion;
+        this.tipo = tipo;
+        this.hora = hora;
+    }
+    
+     public Evento(LocalDate fecha, int duracion, String ubicacion,
+            String tipo, LocalTime hora) {
+        
+        this.id = String.format("EV%02d", contadorEventos++);
         this.fecha = fecha;
         this.duracion = duracion;
         this.ubicacion = ubicacion;
@@ -74,4 +86,9 @@ public class Evento {
         return String.format("fecha: %s%nDuracion: %d%nUbicacion: %s%nTipo: %s%nHora: %s%n",
                 fecha.toString(), duracion, ubicacion, tipo, hora.toString());
     }
-} 
+    
+    public String toCSV() {
+        return String.join(";", id, fecha.toString(), String.valueOf(duracion),
+                tipo, hora.toString());
+    }
+}

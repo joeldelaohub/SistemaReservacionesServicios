@@ -4,6 +4,9 @@
  */
 package sistemareservacionesservicios;
 
+import catalogo.PaqueteCSV;
+import catalogo.ServicioCSV;
+
 /**
  *
  * @author joeld
@@ -15,7 +18,8 @@ public class SistemaReservacionesServicios {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       
+        ServicioCSV.leerServicios();
+        PaqueteCSV.leerPaquetes();
     }
     
 }

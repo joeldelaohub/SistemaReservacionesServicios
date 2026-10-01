@@ -68,4 +68,16 @@ public class GestorReserva {
         
         return reservasCliente;
     }
+    
+    public static Reserva buscarReserva(String id) {
+        Reserva reservaEncontrada = null;
+        
+        for (int i = 0; i < listaReservas.size(); i++) {
+            if(listaReservas.get(i).getId().equals(id)) {
+                reservaEncontrada = listaReservas.get(i);
+            }
+        }
+        
+        return reservaEncontrada;
+    }
 }
