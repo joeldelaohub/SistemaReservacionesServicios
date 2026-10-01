@@ -15,19 +15,17 @@ public class Reserva {
     private Cliente cliente;
     private Evento evento;
     private Paquete paquete;
-    private Factura factura;
     private Estado estado;
     private LocalDateTime fechaLimitePago;
     private LocalDateTime fechaConfirmacion;
     private static int contadorReservas = 0;
     
-    public Reserva(String id, Cliente cliente, Evento evento, Paquete paquete, Factura factura, 
+    public Reserva(String id, Cliente cliente, Evento evento, Paquete paquete, 
             Estado estado, LocalDateTime fechaLimitePago, LocalDateTime fechaConfirmacion) {
         this.id = id;
         this.cliente = cliente;
         this.evento = evento;
         this.paquete = paquete;
-        this.factura = factura;
         this.estado = estado;
         this.fechaLimitePago = fechaLimitePago;
         this.fechaConfirmacion = fechaConfirmacion;
@@ -36,7 +34,7 @@ public class Reserva {
     public Reserva(String id, Cliente cliente, Evento evento, Paquete paquete, 
             LocalDateTime fechaLimitePago) {
         
-       this(String.format("RE%02d", contadorReservas++), cliente, evento, paquete, null, Estado.PENDIENTE, fechaLimitePago, null);
+       this(String.format("RE%02d", contadorReservas++), cliente, evento, paquete, Estado.PENDIENTE, fechaLimitePago, null);
     }
 
     public String getId() {
@@ -65,10 +63,6 @@ public class Reserva {
 
     public void setPaquete(Paquete paquete) {
         this.paquete = paquete;
-    }
-
-    public Factura getFactura() {
-        return factura;
     }
 
     public Estado getEstado() {
@@ -102,10 +96,6 @@ public class Reserva {
         if(this.estado != Estado.APROBADA)
             throw new IllegalArgumentException("La reserva debe de ser aprobada primero.");
         
-        if(this.factura == null) {
-            throw new IllegalArgumentException("se debe se confirmar el anticipo para confirmar la reserva");
-        }
-        
         this.fechaConfirmacion = LocalDateTime.now();
         this.estado = Estado.CONFIRMADA;
     }
@@ -127,9 +117,6 @@ public class Reserva {
     public void cancelarPorAdmin() {
          if(this.estado == Estado.FINALIZADA || this.estado  == Estado.CANCELADA)
             throw new IllegalArgumentException("No puedes cancelar una reserva que ya finalizó o ha sido cancelada.");
-        
-        if(this.factura != null)
-            this.factura.marcarReembolso();
             
         this.estado = Estado.CANCELADA;
     }
@@ -164,5 +151,11 @@ public class Reserva {
     public String toString() {
         return String.format("Cliente: %s%nFecha de Evento: %s%nPaquete: %s%nEstado: %s%n", 
                 cliente.getNombre(), evento.getFecha().toString(), paquete.getNombre(), estado.toString());
+    }
+    
+    public String toCSV() {
+        return String.join(";", id, cliente.getId(), evento.getId(), paquete.getId(),
+                String.valueOf(estado), fechaLimitePago.toString(),
+                fechaConfirmacion.toString());
     }
 }

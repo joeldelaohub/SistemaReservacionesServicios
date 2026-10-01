@@ -36,6 +36,10 @@ public class Factura {
         this.saldoRestante = this.montoTotal - this.saldoAnticipado;
         this.reembolso = false;
     }
+    
+    public String getId() {
+        return id;
+    }
 
     public Reserva getReserva() {
         return reserva;

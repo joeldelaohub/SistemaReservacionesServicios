@@ -6,8 +6,12 @@ package sistemareservacionesservicios.usuario;
  */
 public class Cliente extends Usuario {
     
-    public Cliente(String id, String nombre, String telefono) {
-        super(id, nombre, telefono);
+    public Cliente(String id, String nombre, String telefono, Rol rol) {
+        super(id, nombre, telefono, rol);
+    }
+    
+    public Cliente(String nombre, String telefono, Rol rol) {
+        super(String.format("CLI%02d", contadorUsuarios++), nombre, telefono, rol);
     }
     
     @Override

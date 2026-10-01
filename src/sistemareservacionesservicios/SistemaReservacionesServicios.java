@@ -6,6 +6,13 @@ package sistemareservacionesservicios;
 
 import catalogo.PaqueteCSV;
 import catalogo.ServicioCSV;
+import evento.EventoCSV;
+import evento.ItinerarioCSV;
+import reserva.FacturaCSV;
+import reserva.ReservaCSV;
+import sistemareservacionesservicios.usuario.UsuarioCSV;
+
+
 
 /**
  *
@@ -18,8 +25,13 @@ public class SistemaReservacionesServicios {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        UsuarioCSV.leerUsuarios();
         ServicioCSV.leerServicios();
+        EventoCSV.leerEventos();
+        ItinerarioCSV.leerItinerario();
         PaqueteCSV.leerPaquetes();
+        ReservaCSV.leerReserva();
+        FacturaCSV.leerFacturas();
     }
     
 }

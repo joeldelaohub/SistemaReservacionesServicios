@@ -13,4 +13,16 @@ import java.util.ArrayList;
  */
 public class GestionPaquete {
     public static ArrayList<Paquete> paquetes = new ArrayList<>();
+    
+    public static Paquete buscarPaquete(String id) {
+        Paquete paqueteEncontrado = null;
+        
+        for (int i = 0; i < paquetes.size(); i++) {
+            if(paquetes.get(i).getId().equals(id)) {
+                paqueteEncontrado = paquetes.get(i);
+            }
+        }
+        
+        return paqueteEncontrado;
+    }
 }

@@ -4,11 +4,14 @@ public class Usuario {
     private final String id;
     private String nombre;
     private String telefono;
+    private Rol rol;
+    protected static int contadorUsuarios = 0;
     
-    public Usuario(String id, String nombre, String telefono) {
+    public Usuario(String id, String nombre, String telefono, Rol rol) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
+        this.rol = rol;
     }
 
     public String getId() {
@@ -29,5 +32,9 @@ public class Usuario {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+    
+    public String toCSV() {
+        return String.join(";", id, nombre, telefono, String.valueOf(rol));
     }
 }
