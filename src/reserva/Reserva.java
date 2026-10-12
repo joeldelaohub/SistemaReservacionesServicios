@@ -4,6 +4,7 @@ import catalogo.Paquete;
 import estados.Estado;
 import evento.Evento;
 import java.time.LocalDateTime;
+import reserva.gestionclases.GestionFactura;
 import sistemareservacionesservicios.usuario.Cliente;
 
 /**
@@ -31,10 +32,11 @@ public class Reserva {
         this.fechaConfirmacion = fechaConfirmacion;
     }
 
-    public Reserva(String id, Cliente cliente, Evento evento, Paquete paquete, 
+    public Reserva(Cliente cliente, Evento evento, Paquete paquete, 
             LocalDateTime fechaLimitePago) {
         
-       this(String.format("RE%02d", contadorReservas++), cliente, evento, paquete, Estado.PENDIENTE, fechaLimitePago, null);
+       this(String.format("RE%02d", contadorReservas++), cliente, evento, paquete, Estado.PENDIENTE, 
+               fechaLimitePago.plusHours(24), null);
     }
 
     public String getId() {
@@ -96,6 +98,10 @@ public class Reserva {
         if(this.estado != Estado.APROBADA)
             throw new IllegalArgumentException("La reserva debe de ser aprobada primero.");
         
+        if(buscarFactura() == null) {
+            throw new IllegalArgumentException("Se debe de hacer un deposito minimo de 30%");
+        }
+        
         this.fechaConfirmacion = LocalDateTime.now();
         this.estado = Estado.CONFIRMADA;
     }
@@ -119,6 +125,8 @@ public class Reserva {
             throw new IllegalArgumentException("No puedes cancelar una reserva que ya finalizó o ha sido cancelada.");
             
         this.estado = Estado.CANCELADA;
+        Factura factura = buscarFactura();
+        factura.marcarReembolso();
     }
     
     public boolean validarModificacion() {
@@ -147,6 +155,12 @@ public class Reserva {
         return sePuedeModificar;
     }
     
+    public Factura buscarFactura() {
+        Factura facturaEncontrada = GestionFactura.buscarFacturaReserva(this);
+        
+        return facturaEncontrada;
+    }
+    
     @Override
     public String toString() {
         return String.format("Cliente: %s%nFecha de Evento: %s%nPaquete: %s%nEstado: %s%n", 
@@ -156,6 +170,6 @@ public class Reserva {
     public String toCSV() {
         return String.join(";", id, cliente.getId(), evento.getId(), paquete.getId(),
                 String.valueOf(estado), fechaLimitePago.toString(),
-                fechaConfirmacion.toString());
+                fechaConfirmacion == null ? "null": fechaConfirmacion.toString());
     }
 }

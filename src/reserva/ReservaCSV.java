@@ -39,12 +39,12 @@ public class ReservaCSV {
                 String[] valores = linea.split(";");
                 
                 String reservaId = valores[0];
-                Cliente cliente = (Cliente) GestionUsuario.buscarUsuario(valores[1]);
+                Cliente cliente = (Cliente) GestionUsuario.buscarUsuarioId(valores[1]);
                 Evento evento = GestionEvento.buscarEvento(valores[2]);
                 Paquete paquete = GestionPaquete.buscarPaquete(valores[3]);
                 Estado estado = Estado.valueOf(valores[4]);
-                LocalDateTime fechaLimite = LocalDateTime.parse(valores[5]);
-                LocalDateTime fechaConfirmacion = LocalDateTime.parse(valores[6]);
+                LocalDateTime fechaLimite = convertidor(valores[5]);
+                LocalDateTime fechaConfirmacion = convertidor(valores[6]);
                 
                 GestorReserva.listaReservas.add(
                 new Reserva(reservaId, cliente, evento, paquete, estado, fechaLimite,
@@ -54,5 +54,20 @@ public class ReservaCSV {
         }catch(IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    public static LocalDateTime convertidor(String fecha) {
+        if(fecha == null) {
+            return null;
+        }
+        
+        // limpiamos el string de espacios que puedan molestar
+        String fechaLimpia = fecha.trim();
+        
+        if(fechaLimpia.isEmpty() || fechaLimpia.equalsIgnoreCase("null")) {
+            return null;
+        }
+        
+        return LocalDateTime.parse(fechaLimpia);
     }
 }

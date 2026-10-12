@@ -16,7 +16,7 @@ public class EventoCSV {
     public static void guardarEventos() {
         try(FileWriter fw = new FileWriter("evento.csv")) {
             
-            fw.write("id;fecha;duracion;ubicacion;tipo;hora\n");
+            fw.write("id;cliente_id;fecha;duracion;ubicacion;tipo;hora\n");
             
             for(Evento e: GestionEvento.eventos) {
                 fw.write(e.toCSV() + "\n");
@@ -38,13 +38,14 @@ public class EventoCSV {
                 String valores[] = linea.split(";");
                 
                 String eventoId = valores[0];
-                LocalDate fechaEvento = LocalDate.parse(valores[1]);
-                int duracionEvento = Integer.parseInt(valores[2]);
-                String ubicacionEvento = valores[3];
-                String tipoEvento = valores[4];
-                LocalTime horaEvento = LocalTime.parse(valores[5]);
+                String clienteId = valores[1];
+                LocalDate fechaEvento = LocalDate.parse(valores[2]);
+                int duracionEvento = Integer.parseInt(valores[3]);
+                String ubicacionEvento = valores[4];
+                String tipoEvento = valores[5];
+                LocalTime horaEvento = LocalTime.parse(valores[6]);
                 
-                GestionEvento.eventos.add(new Evento(eventoId, fechaEvento,
+                GestionEvento.eventos.add(new Evento(eventoId, clienteId, fechaEvento,
                             duracionEvento, ubicacionEvento, tipoEvento,
                             horaEvento));
             }

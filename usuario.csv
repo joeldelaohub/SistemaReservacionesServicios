@@ -1,1 +1,3 @@
 id;nombre;telefono;rol
+ADM00;Joel De La O;89786756;ADMIN
+CLI00;Ana Maria;67564534;CLIENTE

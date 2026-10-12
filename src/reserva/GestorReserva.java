@@ -10,7 +10,7 @@ import sistemareservacionesservicios.usuario.Cliente;
  * @author joeld
  */
 public class GestorReserva {
-    public static ArrayList<Reserva> listaReservas;
+    public static ArrayList<Reserva> listaReservas = new ArrayList<>();
     
     public boolean validarFecha(Reserva reserva, Evento evento) {
         boolean sePuedeCambiar = true;

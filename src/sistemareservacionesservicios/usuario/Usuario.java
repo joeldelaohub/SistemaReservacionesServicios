@@ -34,6 +34,10 @@ public class Usuario {
         this.telefono = telefono;
     }
     
+    public Rol getRol() {
+        return rol;
+    }
+    
     public String toCSV() {
         return String.join(";", id, nombre, telefono, String.valueOf(rol));
     }

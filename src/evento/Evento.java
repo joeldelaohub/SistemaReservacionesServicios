@@ -1,5 +1,6 @@
 package evento;
 
+import auth.Auth;
 import java.time.LocalDate;
 import java.time.LocalTime;
 /**
@@ -8,17 +9,19 @@ import java.time.LocalTime;
  */
 public class Evento {
     private final String id;
+    private String clienteId;
     private LocalDate fecha;
     private int duracion;
     private String ubicacion;
     private String tipo;
     private LocalTime hora;
-    private static int contadorEventos = 0;
+    public static int contadorEventos = 0;
     
-    public Evento(String id, LocalDate fecha, int duracion, String ubicacion,
+    public Evento(String id, String clienteId, LocalDate fecha, int duracion, String ubicacion,
             String tipo, LocalTime hora) {
         
         this.id = id;
+        this.clienteId = clienteId;
         this.fecha = fecha;
         this.duracion = duracion;
         this.ubicacion = ubicacion;
@@ -28,15 +31,37 @@ public class Evento {
     
      public Evento(LocalDate fecha, int duracion, String ubicacion,
             String tipo, LocalTime hora) {
+  
+        if(fecha.isEqual(LocalDate.now()) || fecha.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("fecha del evento no puede ser para el dia actual o dias pasados");
+        }
+        
+        if(duracion <= 0)
+            throw new IllegalArgumentException("la duracion no puede ser menor o igual a cero");
+        
+        if(ubicacion.isEmpty())
+            throw new IllegalArgumentException("ubicacion no puede estar vacia");
+        
+        if(tipo.isEmpty())
+            throw new IllegalArgumentException("tipo de evento no puede estar vacia");
+        
+        if(hora == null)
+            throw new IllegalArgumentException("hora no puede estar vacia");
+            
         
         this.id = String.format("EV%02d", contadorEventos++);
+        this.clienteId = Auth.usuarioLogueado.getId();
         this.fecha = fecha;
         this.duracion = duracion;
         this.ubicacion = ubicacion;
         this.tipo = tipo;
         this.hora = hora;
     }
-
+    
+    public String getClienteId() {
+        return clienteId;
+    }
+    
     public String getId() {
         return id;
     }
@@ -88,7 +113,7 @@ public class Evento {
     }
     
     public String toCSV() {
-        return String.join(";", id, fecha.toString(), String.valueOf(duracion),
+        return String.join(";", id, clienteId, fecha.toString(), String.valueOf(duracion), ubicacion,
                 tipo, hora.toString());
     }
 }

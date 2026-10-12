@@ -1,1 +1,3 @@
-id;cliente_id;evento_id;paquete_id; estado;fecha;Limite Pago,;Fecha Confirmacion
+id;cliente_id;evento_id;paquete_id;estado;fecha;Limite Pago,;Fecha Confirmacion
+RE00;CLI00;EV00;PAQ01;PENDIENTE;2026-10-11T10:36:59.969312600;null
+RE01;CLI00;EV01;PAQ00;PENDIENTE;2026-10-11T10:37:47.400288400;null

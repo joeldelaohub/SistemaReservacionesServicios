@@ -14,7 +14,7 @@ public class Paquete {
     private static int contadorPaquete = 0; 
     
     public Paquete(String id, String nombre, ArrayList<Servicio> servicios, double precio) {
-        this.id = String.format("PAQ%02d", contadorPaquete++);
+        this.id = id;
         this.nombre = nombre;
         this.setListaServicios(servicios);
         this.setPrecio(precio);
@@ -113,5 +113,15 @@ public class Paquete {
     
     public String toCsv() {
         return String.join(";", id, nombre, String.valueOf(precio));
+    }
+    
+    public String getCantidadServicios() {
+        if(listaServicios == null || listaServicios.isEmpty()) {
+            return "0 servicios (Doble clic)";
+        }
+        
+        int cantidad = listaServicios.size();
+        
+        return cantidad == 1 ? cantidad + " servicio (Doble clic)": cantidad + " servicios (Doble clic)";
     }
 }
