@@ -12,7 +12,7 @@ import sistemareservacionesservicios.usuario.Cliente;
 public class GestorReserva {
     public static ArrayList<Reserva> listaReservas = new ArrayList<>();
     
-    public boolean validarFecha(Reserva reserva, Evento evento) {
+    public static boolean validarFecha(Reserva reserva, Evento evento) {
         boolean sePuedeCambiar = true;
         
         for (int i = 0; i < listaReservas.size(); i++) {
@@ -33,15 +33,15 @@ public class GestorReserva {
         return sePuedeCambiar;
     }
     
-    public void agregarReserva(Reserva reserva) {
+    public static void agregarReserva(Reserva reserva) {
         listaReservas.add(reserva);
     }
     
-    public void eliminarReserva(Reserva reserva) {
-        listaReservas.remove(reserva);
+    public static void eliminarReserva( int indice) {
+        listaReservas.remove(indice);
     }
     
-    public void modificarReserva(Reserva reserva, Evento evento) {
+    public static void modificarReserva(Reserva reserva, Evento evento) {
        if(reserva.validarModificacion()) {
            if(validarFecha(reserva, evento)) {
                reserva.setEvento(evento);

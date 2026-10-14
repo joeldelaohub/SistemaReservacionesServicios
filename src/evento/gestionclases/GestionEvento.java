@@ -13,6 +13,23 @@ import java.util.ArrayList;
  */
 public class GestionEvento {
     public static ArrayList<Evento> eventos = new ArrayList<>();
+    
+    private static int getIndice(Evento evento) {
+        int indice = 0;
+        
+        for (int i = 0; i < eventos.size(); i++) {
+            
+            if(evento.equals(eventos.get(i))) {
+                indice = i;
+            }
+        }
+        
+        return indice;
+    }
+    
+    public static void modificarEvento(Evento evento) {
+        eventos.set(getIndice(evento), evento);
+    }
         
     public static Evento buscarEvento(String id) {
         

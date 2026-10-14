@@ -6,7 +6,7 @@ package gui;
 
 import gui.auth.PanelAuth;
 import gui.users.PanelAdmin;
-import gui.users.PanelCliente;
+import gui.users.cliente.PanelCliente;
 import java.awt.CardLayout;
 
 /**
