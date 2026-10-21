@@ -47,16 +47,23 @@ public class GestionEvento {
      public static void guardarNumeroID() {
         int mayor = 0;
         
-        for (int i = 0; i < eventos.size(); i++) {
+        if(eventos.isEmpty()) {
+            Evento.contadorEventos = mayor++;
+        } else {
             
-            String id = eventos.get(i).getId().substring(3);
-            int idNumero = Integer.parseInt(id);
+            for (int i = 0; i < eventos.size(); i++) {
             
-             if(idNumero > mayor) {
-                 mayor = idNumero;
-             }
+                String id = eventos.get(i).getId().substring(3);
+                int idNumero = Integer.parseInt(id);
+
+                 if(idNumero > mayor) {
+                     mayor = idNumero;
+                 }
+            }
+            
+             Evento.contadorEventos = ++mayor;
         }
-         
-         Evento.contadorEventos = ++mayor;
+        
+        
     }
 }

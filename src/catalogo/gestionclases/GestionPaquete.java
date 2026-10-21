@@ -25,4 +25,16 @@ public class GestionPaquete {
         
         return paqueteEncontrado;
     }
+    
+    public static Paquete buscarPaqueteNombre(String nombre) {
+        Paquete paqueteEncontrado = null;
+        
+        for (int i = 0; i < paquetes.size(); i++) {
+            if(paquetes.get(i).getNombre().equals(nombre)) {
+                paqueteEncontrado = paquetes.get(i);
+            }
+        }
+        
+        return paqueteEncontrado;
+    }
 }

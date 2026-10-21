@@ -1,1 +1,4 @@
 id;cliente_id;fecha;duracion;ubicacion;tipo;hora
+EV00;CLI00;2026-10-31;2;Tegucigalpa, Honduras;Boda;03:00
+EV01;CLI00;2028-10-12;2;MI casa;boda;06:00
+EV02;CLI00;2027-10-22;2;MiraFlores;Boda;06:00

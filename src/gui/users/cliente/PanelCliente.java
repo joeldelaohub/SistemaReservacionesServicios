@@ -24,12 +24,17 @@ public class PanelCliente extends javax.swing.JPanel {
         panelContenido.setLayout(card);
 
         PanelTablaEventos tabla = new PanelTablaEventos();
-
+        PanelReserva reserva = new PanelReserva();
+        
         panelContenido.add("tablaEventos", tabla);
+        panelContenido.add("panelReserva", reserva);
 
         card.show(panelContenido, "tablaEventos");
     }
-
+    
+    public void mostrarPanel(String nombre) {
+        card.show(panelContenido, nombre);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +91,7 @@ public class PanelCliente extends javax.swing.JPanel {
                 btnReservaMouseExited(evt);
             }
         });
+        btnReserva.addActionListener(this::btnReservaActionPerformed);
 
         btnPerfil.setBackground(new java.awt.Color(255, 255, 255));
         btnPerfil.setFont(new java.awt.Font("JetBrains Mono ExtraLight", 0, 12)); // NOI18N
@@ -215,7 +221,13 @@ public class PanelCliente extends javax.swing.JPanel {
 
     private void btnEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventosActionPerformed
         // TODO add your handling code here:
+        mostrarPanel("tablaEventos");
     }//GEN-LAST:event_btnEventosActionPerformed
+
+    private void btnReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaActionPerformed
+        // TODO add your handling code here:
+        mostrarPanel("panelReserva");
+    }//GEN-LAST:event_btnReservaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

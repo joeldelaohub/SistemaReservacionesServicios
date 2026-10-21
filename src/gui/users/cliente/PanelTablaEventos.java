@@ -5,9 +5,8 @@
 package gui.users.cliente;
 
 
-import evento.Evento;
+
 import evento.EventoCSV;
-import evento.gestionclases.GestionEvento;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -63,6 +62,8 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         tablaReserva = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnActualizarTabla = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(20, 26, 61));
 
@@ -84,34 +85,47 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(this::btnModificarActionPerformed);
 
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setText("Cancelar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+
+        btnActualizarTabla.setText("Actualizar");
+        btnActualizarTabla.addActionListener(this::btnActualizarTablaActionPerformed);
+
+        jButton2.setText("Pagar Anticipo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(408, 408, 408)
-                .addComponent(btnModificar)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar)
-                .addContainerGap(412, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(367, 367, 367)
+                        .addComponent(btnModificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
+                        .addComponent(btnActualizarTabla)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnEliminar))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnModificar)
+                        .addComponent(btnEliminar)
+                        .addComponent(jButton2))
+                    .addComponent(btnActualizarTabla))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,18 +136,14 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         if(indice == -1) {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna reserva", "Reserva Invalida", JOptionPane.WARNING_MESSAGE);
         } else {
-            int opcion = JOptionPane.showConfirmDialog(this, "Estas seguro de eliminar esta reserva", "Eliminar Reserva", 2);
+            int opcion = JOptionPane.showConfirmDialog(this, "Estas seguro de cancelar esta reserva", "Cancelar Reserva", 2);
             
             if(opcion == 0) {
-                Evento evento = GestorReserva.listaReservas.get(opcion).getEvento();
-
-                GestionEvento.eventos.remove(evento);
-                GestorReserva.eliminarReserva(indice);
-
+                GestorReserva.listaReservas.get(indice).cancelarPorCliente();
                 ReservaCSV.guardarReserva();
                 EventoCSV.guardarEventos();
 
-                JOptionPane.showMessageDialog(this, "Reserva Eliminada!");
+                JOptionPane.showMessageDialog(this, "Reserva Cancelada!");
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -155,10 +165,17 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void btnActualizarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTablaActionPerformed
+        // TODO add your handling code here:
+        actualizarTabla();
+    }//GEN-LAST:event_btnActualizarTablaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarTabla;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaReserva;
     // End of variables declaration//GEN-END:variables
