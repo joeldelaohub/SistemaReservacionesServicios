@@ -6,12 +6,18 @@ package sistemareservacionesservicios;
 
 import catalogo.PaqueteCSV;
 import catalogo.ServicioCSV;
+import catalogo.gestionclases.GestionPaquete;
+import catalogo.gestionclases.GestionServicio;
 import evento.EventoCSV;
 import evento.ItinerarioCSV;
 import evento.gestionclases.GestionEvento;
+import evento.gestionclases.GestionItinerario;
 import gui.PantallaPrincipal;
 import reserva.FacturaCSV;
+import reserva.GestorReserva;
 import reserva.ReservaCSV;
+import reserva.gestionclases.GestionFactura;
+import sistemareservacionesservicios.usuario.GestionUsuario;
 import sistemareservacionesservicios.usuario.UsuarioCSV;
 
 
@@ -37,12 +43,26 @@ public class SistemaReservacionesServicios {
         ReservaCSV.leerReserva();
         FacturaCSV.leerFacturas();
         
-        PantallaPrincipal principal = new PantallaPrincipal();
-        principal.setLocationRelativeTo(null);
-        principal.setVisible(true);
+        try {
+            PantallaPrincipal principal = new PantallaPrincipal();
+            principal.setLocationRelativeTo(null);
+            principal.setVisible(true);
+        }catch(NullPointerException e) {
+            StackTraceElement[] error = e.getStackTrace();
+            
+            for(StackTraceElement err: error) {
+                System.out.println(err.toString());
+            }
+        }
         
         // actualizacion del ultimo registro mediante el ultimo numero del Id
+        GestionUsuario.guardarNumeroID();
+        GestionServicio.guardarNumeroID();
         GestionEvento.guardarNumeroID();
+        GestionItinerario.guardarNumeroID();
+        GestionPaquete.guardarNumeroID();
+        GestorReserva.guardarNumeroID();
+        GestionFactura.guardarNumeroID();   
     }
     
 }

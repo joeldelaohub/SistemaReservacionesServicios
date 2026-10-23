@@ -71,6 +71,7 @@ public class PanelReserva extends javax.swing.JPanel {
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Elige el evento a reservar");
 
         btnEnviarReserva.setBackground(new java.awt.Color(59, 77, 240));

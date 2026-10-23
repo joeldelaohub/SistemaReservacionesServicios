@@ -23,4 +23,25 @@ public class GestionServicio {
         
         return null;
     }
+    
+    public static void guardarNumeroID() {
+        int mayor = 0;
+        
+        if(servicios.isEmpty()) {
+            Servicio.contadorServicios = mayor++;
+        } else {
+            
+            for (int i = 0; i < servicios.size(); i++) {
+            
+                String id = servicios.get(i).getId().substring(2);
+                int idNumero = Integer.parseInt(id);
+
+                 if(idNumero > mayor) {
+                     mayor = idNumero;
+                 }
+            }
+            
+             Servicio.contadorServicios = ++mayor;
+        }
+    }
 }

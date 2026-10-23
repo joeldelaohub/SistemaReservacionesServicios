@@ -4,6 +4,7 @@ import catalogo.Paquete;
 import estados.Estado;
 import evento.Evento;
 import java.time.LocalDateTime;
+import persistencia.PersistibleCSV;
 import reserva.gestionclases.GestionFactura;
 import sistemareservacionesservicios.usuario.Cliente;
 
@@ -11,7 +12,7 @@ import sistemareservacionesservicios.usuario.Cliente;
  *
  * @author joeld
  */
-public class Reserva {
+public class Reserva implements PersistibleCSV {
     private final String id;
     private Cliente cliente;
     private Evento evento;
@@ -19,7 +20,8 @@ public class Reserva {
     private Estado estado;
     private LocalDateTime fechaLimitePago;
     private LocalDateTime fechaConfirmacion;
-    private static int contadorReservas = 0;
+    public static int contadorReservas = 0;
+    
     
     public Reserva(String id, Cliente cliente, Evento evento, Paquete paquete, 
             Estado estado, LocalDateTime fechaLimitePago, LocalDateTime fechaConfirmacion) {
@@ -167,6 +169,7 @@ public class Reserva {
                 cliente.getNombre(), evento.getFecha().toString(), paquete.getNombre(), estado.toString());
     }
     
+    @Override
     public String toCSV() {
         return String.join(";", id, cliente.getId(), evento.getId(), paquete.getId(),
                 String.valueOf(estado), fechaLimitePago.toString(),

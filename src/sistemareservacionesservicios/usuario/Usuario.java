@@ -1,6 +1,9 @@
 package sistemareservacionesservicios.usuario;
 
-public class Usuario {
+
+import persistencia.PersistibleCSV;
+
+public class Usuario implements PersistibleCSV {
     private final String id;
     private String nombre;
     private String telefono;
@@ -38,6 +41,7 @@ public class Usuario {
         return rol;
     }
     
+    @Override
     public String toCSV() {
         return String.join(";", id, nombre, telefono, String.valueOf(rol));
     }

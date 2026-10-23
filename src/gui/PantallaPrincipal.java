@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -25,7 +25,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         panelPrincipal.setLayout(card);
         
         PanelAuth panelAuth = new PanelAuth(card, panelPrincipal);
-        PanelCliente panelCliente = new PanelCliente();
+        PanelCliente panelCliente = new PanelCliente(card, panelPrincipal);
         PanelAdmin panelAdmin = new PanelAdmin();
         
         panelPrincipal.add("auth", panelAuth);

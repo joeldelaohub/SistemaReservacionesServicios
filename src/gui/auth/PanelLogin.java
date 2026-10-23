@@ -5,10 +5,10 @@
 package gui.auth;
 
 import auth.Auth;
+import gui.users.cliente.PanelTablaEventos;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import sistemareservacionesservicios.usuario.Rol;
 import sistemareservacionesservicios.usuario.Usuario;
 
 /**
@@ -111,6 +111,7 @@ public class PanelLogin extends javax.swing.JPanel {
         Usuario usuario = Auth.iniciarSesion(nombre);
         
         if(usuario != null) {
+            PanelTablaEventos.actualizarTabla();
             panelAuth.sesionExitosa(usuario.getRol());
         } else {
             JOptionPane.showMessageDialog(panel, "Usuario no encontrado, porfavor registrate");

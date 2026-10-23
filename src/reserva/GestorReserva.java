@@ -57,7 +57,7 @@ public class GestorReserva {
         return this.listaReservas;
     }
     
-    public ArrayList<Reserva> buscarReservasCliente(Cliente cliente) {
+    public static ArrayList<Reserva> buscarReservasCliente(Cliente cliente) {
         ArrayList<Reserva> reservasCliente = new ArrayList<>();
         
         for (int i = 0; i < listaReservas.size(); i++) {
@@ -79,5 +79,26 @@ public class GestorReserva {
         }
         
         return reservaEncontrada;
+    }
+    
+    public static void guardarNumeroID() {
+        int mayor = 0;
+        
+        if(listaReservas.isEmpty()) {
+            Reserva.contadorReservas = mayor++;
+        } else {
+            
+            for (int i = 0; i < listaReservas.size(); i++) {
+            
+                String id = listaReservas.get(i).getId().substring(2);
+                int idNumero = Integer.parseInt(id);
+
+                 if(idNumero > mayor) {
+                     mayor = idNumero;
+                 }
+            }
+            
+             Reserva.contadorReservas = ++mayor;
+        }
     }
 }

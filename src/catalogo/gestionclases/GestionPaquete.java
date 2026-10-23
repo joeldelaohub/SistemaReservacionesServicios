@@ -37,4 +37,25 @@ public class GestionPaquete {
         
         return paqueteEncontrado;
     }
+    
+    public static void guardarNumeroID() {
+        int mayor = 0;
+        
+        if(paquetes.isEmpty()) {
+            Paquete.contadorPaquete = mayor++;
+        } else {
+            
+            for (int i = 0; i < paquetes.size(); i++) {
+            
+                String id = paquetes.get(i).getId().substring(3);
+                int idNumero = Integer.parseInt(id);
+
+                 if(idNumero > mayor) {
+                     mayor = idNumero;
+                 }
+            }
+            
+             Paquete.contadorPaquete = ++mayor;
+        }
+    }
 }

@@ -19,7 +19,7 @@ public class ServicioCSV {
             fw.write("id;nombre;precio;descripcion\n");
             
             for(Servicio s: GestionServicio.servicios) {
-                fw.write(s.toCsv() + "\n");
+                fw.write(s.toCSV() + "\n");
             }
             
         }catch(IOException e) {

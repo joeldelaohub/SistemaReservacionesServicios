@@ -22,4 +22,25 @@ public class GestionFactura {
         
         return factura;
     }
+    
+    public static void guardarNumeroID() {
+        int mayor = 0;
+        
+        if(facturas.isEmpty()) {
+            Factura.contadorFacturas = mayor++;
+        } else {
+            
+            for (int i = 0; i < facturas.size(); i++) {
+            
+                String id = facturas.get(i).getId().substring(2);
+                int idNumero = Integer.parseInt(id);
+
+                 if(idNumero > mayor) {
+                     mayor = idNumero;
+                 }
+            }
+            
+             Factura.contadorFacturas = ++mayor;
+        }
+    }
 }

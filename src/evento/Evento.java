@@ -3,11 +3,12 @@ package evento;
 import auth.Auth;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import persistencia.PersistibleCSV;
 /**
  *
  * @author joeld
  */
-public class Evento {
+public class Evento implements PersistibleCSV {
     private final String id;
     private String clienteId;
     private LocalDate fecha;
@@ -112,6 +113,7 @@ public class Evento {
                 fecha.toString(), duracion, ubicacion, tipo, hora.toString());
     }
     
+    @Override
     public String toCSV() {
         return String.join(";", id, clienteId, fecha.toString(), String.valueOf(duracion), ubicacion,
                 tipo, hora.toString());

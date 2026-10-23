@@ -1,17 +1,18 @@
 package catalogo;
 
 import java.util.ArrayList;
+import persistencia.PersistibleCSV;
 
 /**
  *
  * @author joeld
  */
-public class Paquete {
+public class Paquete implements PersistibleCSV {
     private final String id;
     private String nombre;
     private double precio;
     private ArrayList<Servicio> listaServicios;
-    private static int contadorPaquete = 0; 
+    public static int contadorPaquete = 0; 
     
     public Paquete(String id, String nombre, ArrayList<Servicio> servicios, double precio) {
         this.id = id;
@@ -111,7 +112,8 @@ public class Paquete {
                 id, nombre, precio, listaServicios.size());
     }
     
-    public String toCsv() {
+    @Override
+    public String toCSV() {
         return String.join(";", id, nombre, String.valueOf(precio));
     }
     

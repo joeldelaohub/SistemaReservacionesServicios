@@ -6,7 +6,10 @@ package gui.users.cliente;
 
 
 
+import auth.Auth;
+import estados.Estado;
 import evento.EventoCSV;
+import gui.pay.FacturaDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -14,13 +17,20 @@ import javax.swing.table.DefaultTableModel;
 import reserva.GestorReserva;
 import reserva.Reserva;
 import reserva.ReservaCSV;
+import java.util.ArrayList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import reserva.FacturaCSV;
+import sistemareservacionesservicios.usuario.Cliente;
 
 /**
  *
  * @author joeld
  */
 public class PanelTablaEventos extends javax.swing.JPanel {
-    private DefaultTableModel modelo;
+    
+    private static DefaultTableModel modelo;
+    private static ArrayList<Reserva> reservasCliente = new ArrayList<>();
     /**
      * Creates new form PanelTablaEventos
      */
@@ -32,13 +42,39 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         modelo = new DefaultTableModel(columnas, 0);
         tablaReserva.setModel(modelo);
         
-        actualizarTabla();
+       tablaReserva.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+           @Override
+           public void valueChanged(ListSelectionEvent e) {
+               if(!e.getValueIsAdjusting()) {
+                   int indice = tablaReserva.getSelectedRow();
+                   
+                   if(indice == -1) {
+                       
+                   } else {
+                       Reserva reserva = reservasCliente.get(indice);
+                       
+                       if(reserva.getEstado() == Estado.APROBADA) {
+                           btnFactura.setEnabled(true);
+                       } else {
+                           btnFactura.setEnabled(false);
+                       }
+                   }
+                   
+               } 
+           }
+       });
+       
+       if(Auth.usuarioLogueado != null) {
+           actualizarTabla();
+       }
     }
     
-    public void actualizarTabla() {
-         modelo.setRowCount(0);
+    public static void actualizarTabla() {
+        modelo.setRowCount(0);
+         
+        reservasCliente = GestorReserva.buscarReservasCliente((Cliente) Auth.usuarioLogueado);
         
-        for(Reserva e: GestorReserva.listaReservas) {
+        for(Reserva e: reservasCliente) {
             Object[] reserva = new Object[]{
                 e.getEvento().getFecha().toString(),
                 e.getPaquete().getNombre(),
@@ -63,7 +99,7 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnActualizarTabla = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnFactura = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(20, 26, 61));
 
@@ -91,7 +127,8 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         btnActualizarTabla.setText("Actualizar");
         btnActualizarTabla.addActionListener(this::btnActualizarTablaActionPerformed);
 
-        jButton2.setText("Pagar Anticipo");
+        btnFactura.setText("Pagar Anticipo");
+        btnFactura.addActionListener(this::btnFacturaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,7 +145,7 @@ public class PanelTablaEventos extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnFactura)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                         .addComponent(btnActualizarTabla)))
                 .addContainerGap())
@@ -123,7 +160,7 @@ public class PanelTablaEventos extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnModificar)
                         .addComponent(btnEliminar)
-                        .addComponent(jButton2))
+                        .addComponent(btnFactura))
                     .addComponent(btnActualizarTabla))
                 .addContainerGap(130, Short.MAX_VALUE))
         );
@@ -139,11 +176,17 @@ public class PanelTablaEventos extends javax.swing.JPanel {
             int opcion = JOptionPane.showConfirmDialog(this, "Estas seguro de cancelar esta reserva", "Cancelar Reserva", 2);
             
             if(opcion == 0) {
-                GestorReserva.listaReservas.get(indice).cancelarPorCliente();
-                ReservaCSV.guardarReserva();
-                EventoCSV.guardarEventos();
+                try {
+                    GestorReserva.listaReservas.get(indice).cancelarPorCliente();
+                    ReservaCSV.guardarReserva();
+                    EventoCSV.guardarEventos();
+                    
+                    JOptionPane.showMessageDialog(this, "Reserva Cancelada!");
+                } catch(IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
 
-                JOptionPane.showMessageDialog(this, "Reserva Cancelada!");
+                
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -170,12 +213,29 @@ public class PanelTablaEventos extends javax.swing.JPanel {
         actualizarTabla();
     }//GEN-LAST:event_btnActualizarTablaActionPerformed
 
+    private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
+        // TODO add your handling code here:
+        int indice = tablaReserva.getSelectedRow();
+        
+        if(indice == -1) {
+            JOptionPane.showMessageDialog(this, "No se selecciono ninguna reserva", "Reserva Invalida", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Reserva reserva = GestorReserva.listaReservas.get(indice);
+            FacturaDialog dialogo = new FacturaDialog((JFrame) SwingUtilities.getWindowAncestor(this), true, reserva);
+            dialogo.setLocationRelativeTo(this);
+            dialogo.setVisible(true);
+            
+            FacturaCSV.guardarFacturas();
+            ReservaCSV.guardarReserva();
+        }
+    }//GEN-LAST:event_btnFacturaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarTabla;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnFactura;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaReserva;
     // End of variables declaration//GEN-END:variables

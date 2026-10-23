@@ -1,17 +1,19 @@
 package reserva;
 
+import persistencia.PersistibleCSV;
+
 /**
  *
  * @author joeld
  */
-public class Factura {
+public class Factura implements PersistibleCSV {
     private Reserva reserva;
     private double montoTotal;
     private double saldoRestante;
     private double saldoAnticipado;
     private boolean reembolso;
     private String id;
-    private static int contadorFacturas = 0;
+    public static int contadorFacturas = 0;
     
     public Factura(String id, Reserva reserva, double montoTotal, double saldoAnticipado) {
         if(saldoAnticipado < (montoTotal * 0.30)) {
@@ -92,6 +94,7 @@ public class Factura {
                 reembolso ? "Se reembolso": "Sin reembolso");
     }
     
+    @Override
     public String toCSV() {
         return String.join(";", id, reserva.getId(), String.valueOf(montoTotal),
                 String.valueOf(saldoAnticipado));

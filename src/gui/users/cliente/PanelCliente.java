@@ -4,8 +4,10 @@
  */
 package gui.users.cliente;
 
+import auth.Auth;
 import java.awt.CardLayout;
 import java.awt.Color;
+import javax.swing.JPanel;
 
 /**
  *
@@ -14,12 +16,15 @@ import java.awt.Color;
 public class PanelCliente extends javax.swing.JPanel {
 
     private CardLayout card;
-
+    private CardLayout cardPrincipal;
+    private JPanel panelPrincipal;
     /**
      * Creates new form PanelCliente
      */
-    public PanelCliente() {
+    public PanelCliente(CardLayout cardPrincipal, JPanel panelPrincipal) {
         initComponents();
+        this.cardPrincipal = cardPrincipal;
+        this.panelPrincipal = panelPrincipal;
         card = new CardLayout();
         panelContenido.setLayout(card);
 
@@ -49,8 +54,7 @@ public class PanelCliente extends javax.swing.JPanel {
         btnEventos = new javax.swing.JButton();
         btnReserva = new javax.swing.JButton();
         btnPerfil = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(20, 26, 61));
@@ -63,11 +67,11 @@ public class PanelCliente extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("MELODIE EVENTOS");
 
-        btnEventos.setBackground(new java.awt.Color(59, 77, 240));
+        btnEventos.setBackground(new java.awt.Color(255, 255, 255));
         btnEventos.setFont(new java.awt.Font("JetBrains Mono NL ExtraLight", 0, 12)); // NOI18N
-        btnEventos.setForeground(new java.awt.Color(255, 255, 255));
+        btnEventos.setForeground(new java.awt.Color(0, 0, 0));
         btnEventos.setText("Ver mis eventos");
-        btnEventos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEventos.setBorder(null);
         btnEventos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEventosMouseEntered(evt);
@@ -96,8 +100,7 @@ public class PanelCliente extends javax.swing.JPanel {
         btnPerfil.setBackground(new java.awt.Color(255, 255, 255));
         btnPerfil.setFont(new java.awt.Font("JetBrains Mono ExtraLight", 0, 12)); // NOI18N
         btnPerfil.setForeground(new java.awt.Color(0, 0, 0));
-        btnPerfil.setText("Mi Perfil");
-        btnPerfil.setBorder(null);
+        btnPerfil.setText("Perfil");
         btnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPerfilMouseEntered(evt);
@@ -106,24 +109,13 @@ public class PanelCliente extends javax.swing.JPanel {
                 btnPerfilMouseExited(evt);
             }
         });
+        btnPerfil.addActionListener(this::btnPerfilActionPerformed);
 
-        btnLogin.setBackground(new java.awt.Color(255, 255, 255));
-        btnLogin.setFont(new java.awt.Font("JetBrains Mono ExtraLight", 0, 12)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
-        btnLogin.setText("Login");
-        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnLoginMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnLoginMouseExited(evt);
-            }
-        });
-
-        jButton5.setBackground(new java.awt.Color(0, 0, 0));
-        jButton5.setFont(new java.awt.Font("JetBrains Mono NL ExtraLight", 0, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Sign Up");
+        btnCerrar.setBackground(new java.awt.Color(0, 0, 0));
+        btnCerrar.setFont(new java.awt.Font("JetBrains Mono NL ExtraLight", 0, 12)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrar.setText("Cerrar Sesion");
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
 
         javax.swing.GroupLayout panelNavBarLayout = new javax.swing.GroupLayout(panelNavBar);
         panelNavBar.setLayout(panelNavBarLayout);
@@ -132,16 +124,14 @@ public class PanelCliente extends javax.swing.JPanel {
             .addGroup(panelNavBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(113, 113, 113)
+                .addGap(206, 206, 206)
                 .addComponent(btnEventos)
-                .addGap(48, 48, 48)
+                .addGap(18, 18, 18)
                 .addComponent(btnReserva)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(btnPerfil)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
-                .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(btnCerrar)
                 .addContainerGap())
         );
         panelNavBarLayout.setVerticalGroup(
@@ -153,8 +143,7 @@ public class PanelCliente extends javax.swing.JPanel {
                     .addComponent(btnEventos)
                     .addComponent(btnReserva)
                     .addComponent(btnPerfil)
-                    .addComponent(btnLogin)
-                    .addComponent(jButton5))
+                    .addComponent(btnCerrar))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -197,27 +186,13 @@ public class PanelCliente extends javax.swing.JPanel {
         // TODO add your handling code here:
         btnPerfil.setBackground(Color.white);
         btnPerfil.setForeground(Color.BLACK);
-        btnPerfil.setBorder(null);
     }//GEN-LAST:event_btnPerfilMouseExited
 
     private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
         // TODO add your handling code here:
         btnPerfil.setBackground(new Color(59, 77, 240));
         btnPerfil.setForeground(Color.white);
-        btnPerfil.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     }//GEN-LAST:event_btnPerfilMouseEntered
-
-    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
-        // TODO add your handling code here:
-        btnLogin.setBackground(Color.white);
-        btnLogin.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnLoginMouseExited
-
-    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
-        // TODO add your handling code here:
-        btnLogin.setBackground(new Color(59, 77, 240));
-        btnLogin.setForeground(Color.white);
-    }//GEN-LAST:event_btnLoginMouseEntered
 
     private void btnEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventosActionPerformed
         // TODO add your handling code here:
@@ -229,13 +204,23 @@ public class PanelCliente extends javax.swing.JPanel {
         mostrarPanel("panelReserva");
     }//GEN-LAST:event_btnReservaActionPerformed
 
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnPerfilActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        Auth.usuarioLogueado = null;
+        cardPrincipal.show(panelPrincipal, "auth");
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnEventos;
-    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnReserva;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelNavBar;

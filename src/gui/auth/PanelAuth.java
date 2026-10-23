@@ -4,6 +4,7 @@
  */
 package gui.auth;
 
+import gui.users.cliente.PanelTablaEventos;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import sistemareservacionesservicios.usuario.Rol;

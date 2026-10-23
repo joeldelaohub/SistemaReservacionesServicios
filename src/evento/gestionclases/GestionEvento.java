@@ -44,7 +44,7 @@ public class GestionEvento {
         return eventoEncontrado;
     }
     
-     public static void guardarNumeroID() {
+    public static void guardarNumeroID() {
         int mayor = 0;
         
         if(eventos.isEmpty()) {
@@ -63,7 +63,5 @@ public class GestionEvento {
             
              Evento.contadorEventos = ++mayor;
         }
-        
-        
     }
 }

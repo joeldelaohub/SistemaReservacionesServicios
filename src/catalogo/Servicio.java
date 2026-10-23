@@ -1,15 +1,17 @@
 package catalogo;
 
+import persistencia.PersistibleCSV;
+
 /**
  *
  * @author joeld
  */
-public class Servicio {
+public class Servicio implements PersistibleCSV {
     private final String id;
     private String nombre;
     private double precio;
     private String descripcion;
-    private static int contadorServicios = 0;
+    public static int contadorServicios = 0;
     
     public Servicio(String nombre, double precio, String descripcion) {
         this.id = String.format("SE%02d", contadorServicios++);
@@ -58,7 +60,8 @@ public class Servicio {
         return String.format("id: %s%nNombre: %s%nPrecio: %.2f%nDescripcion: %s%n",id, nombre, precio, descripcion);
     }
     
-    public String toCsv() {
+    @Override
+    public String toCSV() {
         return String.join(";", id, nombre, String.valueOf(precio), descripcion);
     }
 }

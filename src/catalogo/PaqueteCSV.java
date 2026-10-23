@@ -20,7 +20,7 @@ public class PaqueteCSV {
             fw.write("id;nombre;precio\n");
             
             for(Paquete p: GestionPaquete.paquetes) {
-                fw.write(p.toCsv() + "\n");
+                fw.write(p.toCSV() + "\n");
             }
             
         }catch(IOException e) {

@@ -1,19 +1,20 @@
 package evento;
 
 import java.time.LocalTime;
+import persistencia.PersistibleCSV;
 
 /**
  *
  * @author joeld
  */
-public class Itinerario {
+public class Itinerario implements PersistibleCSV {
     private final String id;
     private LocalTime horaMontaje;
     private LocalTime horaPruebaSonido;
     private Evento evento;
     private final int MIN_HORA_MONTAJE = 2;
     private final int MIN_HORA_PRUEBA_SONIDO = 1;
-    private static int contadorItinerarios = 0;
+    public static int contadorItinerarios = 0;
     
     public Itinerario(String id, LocalTime horaMontaje, LocalTime horaPruebaSonido, Evento evento) {
         if(horaMontaje.isAfter(evento.getHora().minusHours(MIN_HORA_MONTAJE))) {
@@ -106,6 +107,7 @@ public class Itinerario {
                 horaMontaje.toString(), horaPruebaSonido.toString(), evento.getFecha().toString(), evento.getHora().toString());
     }
     
+    @Override
     public String toCSV() {
         return String.join(";", id, horaMontaje.toString(), horaPruebaSonido.toString(),
                 evento.getId());
